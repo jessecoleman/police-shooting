@@ -10,7 +10,9 @@
     <!-- jQuery, Bootstrap -->
     <script src="https://code.jquery.com/jquery.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js">
+      drawMap();
+    </script>
     
     <!-- leaflet libraries -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -23,7 +25,7 @@
   </head>
   <body>
     <!-- You may want to put your title and additional informaiton here -->
-    <div class="container">
+    <div id="mapContainer" class="container">
       <!-- This is the div that your map will go in.  You'll need to reference its id -->
       <div id="container"></div>
     </div>
