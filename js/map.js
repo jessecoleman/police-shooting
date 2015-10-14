@@ -41,7 +41,7 @@ var customBuild = function() {
 function processPoints(element, index, array) {
 	var circle = new L.circleMarker([element.lat, element.long]).bindPoput(element.Summary)
 	if(element.Gender == "Male") {
-		console.log(element[Victim Name]);
+		console.log(element["Victim Name"]);
 		circle.color = "blue";
 		circle.addTo(layerMale);
 	} else {
