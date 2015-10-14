@@ -1,5 +1,5 @@
 // Function to draw your map
-var drawMap = function() {
+window.onload = function() {
 
   // Create map and set view
   var map = L.map('container').setView([latitude, longitude], center);
