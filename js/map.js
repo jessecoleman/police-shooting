@@ -2,7 +2,7 @@
 window.onload = function() {
 
   // Create map and set view
-  var map = L.map('container').setView([latitude, longitude], center);
+  var map = L.map('container').setView([39.8282, 98.5795], 13);
 
   // Create a tile layer variable using the appropriate url
   var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
