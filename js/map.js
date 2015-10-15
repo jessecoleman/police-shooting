@@ -24,7 +24,7 @@
 		$.ajax({
 		  	url:'../data/response.json',
 		  	type: "get",
-		  	success: customBuild(),
+		  	success: customBuild(data),
 		  	dataType:"json"
 		});
 
@@ -33,13 +33,12 @@
 	};
 
 	// Loop through your data and add the appropriate layers and points
-	var customBuild = function() {
+	var customBuild = function(data_points) {
 		alert("success");
-		var responseJson = JSON.parse(this.responseText);
 		//object to store layers names paired with their layerGroup arrays
 		var layers = {};
 		//iterate through incidents in responseJson
-		for(var incident in responseJson) {
+		for(var incident in data_points) {
 			//initializes layer if it doesn't already exist
 			if(!layers[incident.Gender]) {
 				layers[incident.Gender] = new L.LayerGroup([]);
