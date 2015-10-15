@@ -30,7 +30,7 @@ var customBuild = function() {
 	//object to store layers names paired with their layerGroup arrays
 	var layers = {};
 	//iterate through incidents in responseJson
-	for(var incident : responseJson) {
+	for(var incident in responseJson) {
 		//initializes layer if it doesn't already exist
 		if(!layers[incident.Gender]) {
 			layers[incident.Gender] = new L.LayerGroup([]);
