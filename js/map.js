@@ -26,19 +26,34 @@ var getData = function() {
 
 // Loop through your data and add the appropriate layers and points
 var customBuild = function() {
-	//gender
-	var layerMale = new L.LayerGroup([]);
-	var layerFemale = new L.LayerGroup([]);
-	this.forEach(processPoints);
+	var responseJson = JSON.parse(this.responseText);
+	//object to store layers names paired with their layerGroup arrays
+	var layers = {};
+	//iterate through incidents in responseJson
+	for(Object incident : responseJson) {
+		//initializes layer if it doesn't already exist
+		if(!layers[incident.Gender]) {
+			layers[incident.Gender] = new L.LayerGroup([]);
+		}
+		//creates circle populated with incident attributes
+		var circle = new L.circleMarker([incident.lat, incident.long]).bindPopout(incident.Summary);
+		circle.color = incident.Gender == "Male" ? blue : red;
+		circle.addTo(layers[incident.Gender]);
+	}
 
 	// Be sure to add each layer to the map
-	layerMale.addTo(map);
-	layerMale.addTo(map);
+	for(Object layer : layers) {
+		layer.addTo(map);
+	}
 	// Once layers are on the map, add a leaflet controller that shows/hides layers
   	L.control.layers(null, layers).addTo(map);
 }
 
-function processPoints(element, index, array) {
+function categorizeLayers(element, index, array) {
+	if(!layers.contains(element.Gender)) {
+		layers.add(new L.LayerGroup([]))
+	}
+	
 	var circle = new L.circleMarker([element.lat, element.long]).bindPoput(element.Summary)
 	if(element.Gender == "Male") {
 		console.log(element["Victim Name"]);
