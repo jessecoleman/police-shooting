@@ -1,37 +1,40 @@
 (function($, L) {
 	// Function to draw your map
+	"use strict"
+
 	window.onload = function() {
 
-	  // Create map and set view
-	  var map = L.map('container').setView([39.8282, -98.5795], 4);
+		// Create map and set view
+		var map = L.map('container').setView([39.8282, -98.5795], 4);
 
-	  // Create a tile layer variable using the appropriate url
-	  var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
+		// Create a tile layer variable using the appropriate url
+		var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 
-	  // Add the layer to your map
-	  layer.addTo(map);
+		// Add the layer to your map
+		layer.addTo(map);
 
-	  // Execute your function to get data
-	  getData();
+		// Execute your function to get data
+		getData();
 	};
 
 	// Function for getting data
 	var getData = function() {
 
-	  // Execute an AJAX request to get the data in data/response.js
-	  $.ajax({
-	  	url:'../data/response.json',
-	  	type: "get",
-	  	success: customBuild(),
-	  	dataType:"json"
-	  });
+		// Execute an AJAX request to get the data in data/response.js
+		$.ajax({
+		  	url:'../data/response.json',
+		  	type: "get",
+		  	success: customBuild(),
+		  	dataType:"json"
+		});
 
 	  // When your request is successful, call your customBuild function
 
-	}
+	};
 
 	// Loop through your data and add the appropriate layers and points
 	var customBuild = function() {
+		alert("success");
 		var responseJson = JSON.parse(this.responseText);
 		//object to store layers names paired with their layerGroup arrays
 		var layers = {};
