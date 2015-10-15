@@ -18,7 +18,12 @@ window.onload = function() {
 var getData = function() {
 
   // Execute an AJAX request to get the data in data/response.js
-  $.ajax('../data/response.json', customBuild());
+  $.ajax({
+  	url:'../data/response.json',
+  	type: "get",
+  	success:customBuild());
+  	dataType:"json"
+  });
 
   // When your request is successful, call your customBuild function
 
