@@ -25,7 +25,10 @@
 		  	url:'../data/response.json',
 		  	type: 'get',
 		  	data: dataString,
-		  	success: customBuild(dataString),
+		  	success: function(dat) {
+		  		dataString = dat;
+		  		customBuild(dataString)
+		  	}
 		  	dataType:'json'
 		});
 
