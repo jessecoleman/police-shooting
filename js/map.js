@@ -22,7 +22,7 @@
 	  $.ajax({
 	  	url:'../data/response.json',
 	  	type: "get",
-	  	success:customBuild(),
+	  	success: customBuild(),
 	  	dataType:"json"
 	  });
 
@@ -54,6 +54,6 @@
 		// Once layers are on the map, add a leaflet controller that shows/hides layers
 	  	L.control.layers(null, layers).addTo(map);
 	}
-}());
+}($, L));
 
 
