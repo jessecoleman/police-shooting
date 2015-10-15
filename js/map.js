@@ -42,7 +42,7 @@ var customBuild = function() {
 	}
 
 	// Be sure to add each layer to the map
-	for(Object layer : layers) {
+	for(var layer in layers) {
 		layer.addTo(map);
 	}
 	// Once layers are on the map, add a leaflet controller that shows/hides layers
