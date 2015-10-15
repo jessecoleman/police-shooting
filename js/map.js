@@ -12,7 +12,7 @@ window.onload = function() {
 
   // Execute your function to get data
   getData();
-}
+};
 
 // Function for getting data
 var getData = function() {
