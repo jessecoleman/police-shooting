@@ -23,10 +23,10 @@
 		// Execute an AJAX request to get the data in data/response.js
 		$.ajax({
 		  	url:'../data/response.json',
-		  	type: "get",
+		  	type: 'get',
 		  	data: dataString,
-		  	success: customBuild(data),
-		  	dataType:"json"
+		  	success: customBuild(dataString),
+		  	dataType:'json'
 		});
 
 	  // When your request is successful, call your customBuild function
