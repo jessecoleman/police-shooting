@@ -16,22 +16,25 @@
     <!-- leaflet libraries -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <!-- custom ActiveLayers library for determining currently active layers -->
+    <script type="text/javascript" src="dist/leaflet.active-layers.min.js"></script>
 
     <!-- Custom files -->
     <script type="text/javascript" src="js/map.js"></script>
     <link rel="stylesheet" href="css/main.css"/>
-   
   </head>
   <body>
     <!-- You may want to put your title and additional informaiton here -->
     <div class="container">
-      <!-- This is the div that your map will go in.  You'll need to reference its id -->
+      <h1>Police Shootings</h1>
+      <h3>This map shows crowdsourced police shooting data from <a href="http://regressing.deadspin.com/deadspin-police-shooting-database-update-were-still-go-1627414202">deadspin</a></h3>
+      <!-- map container -->
       <div id="container"></div>
+      <!-- table container -->
+      <div id="table-container">
+        <table id="table" class="table table-striped table-bordered">
+        </table>
+      </div>
     </div>
-    <script>
-      
-      // This is where you should execute your drawMap function
-      
-    </script>
   </body>
 </html>

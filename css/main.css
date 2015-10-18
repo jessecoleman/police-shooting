@@ -2,3 +2,7 @@
 #container {
 	height:800px;
 }
+
+#table tr:nth-child(even) {
+	background-color: "#111";
+}
