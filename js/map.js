@@ -1,14 +1,21 @@
-//(function($, L) {
+(function($, L) {
 
-	//"use strict"
+	"use strict"
 	
 	//object that displays map
 	var map;
 	//layers for map
 	var baseMaps = {};
 	var overlayMaps = {};
-	//map control object
-	//var control;
+	//controls for map
+	var control;
+	//initialize unknown categories for rows and columns
+	var table = {"Unknown": {"Unknown": 0}};
+
+	//customizable features
+	var defaultCategory = "Victim's Gender"; //set initially selected layer
+	var overlays = ["Victim's Gender", "Race", "Hit or Killed?", "Armed or Unarmed?"]; //set layers to select from
+	var colors = ["Gray", "Blue", "Red", "Purple", "Orange", "Green", "Brown"];  //set colors of points
 
 	//initialize map with tileLayer
 	window.onload = function() {
@@ -18,9 +25,12 @@
 
 		// Create a tile layer variable using the appropriate url
 		var layer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
-
-		// Add layer to map
 		layer.addTo(map);
+
+		// add categories to baseMaps object
+		for(var i = 0; i < overlays.length; i++) {
+			baseMaps[overlays[i]] = new L.LayerGroup([]);
+		}
 
 		//get data
 		getData();
@@ -33,19 +43,18 @@
 		  	url:'data/response.json',
 		  	type: 'get',
 		  	success: function(dat) {
-		  		//creates base layers for each category
-		  		buildControls(dat);
-		  		//builds overlay layers for specified base layer
-		  		buildMap(dat, "Race");
-		  		//add controls to map
-				var control = L.control.layers(baseMaps, overlayMaps).addTo(map);
+		  		//builds overlayMaps for specified base layer
+		  		buildMap(dat, defaultCategory);
+		  		//creates base layers for each category, called after baseMaps and overlayMaps are created
+		  		buildControls(defaultCategory);
 		  		//create table
-		  		buildTable(dat, "Victim's Gender");
+		  		buildTable(dat, defaultCategory);
 		  		//add listener to controls
 		  		map.on('baselayerchange', function() {
 		  			//currently selected base layer
 		  			var selected = $('input[type="radio"]:checked').next()[0].innerHTML.trim();
 		  			buildMap(dat, selected);
+		  			buildControls(selected);
 		  			buildTable(dat, selected);
 		  		});
 		  	},
@@ -54,16 +63,54 @@
 	};
 
 	//creates base maps for each category
-	var buildControls = function(data_points) {
-		//categories that can be selected for
-		var overlays = ["Victim's Gender", "Race", "Hit or Killed?", "Armed or Unarmed?"];
-		for(var i = 0; i < overlays.length; i++) {
-			baseMaps[overlays[i]] = new L.LayerGroup([]);
+	//this bit of code is very hacky, not part of main challenge
+	//limited by functions made available by leaflet for map and layerGroups
+	var buildControls = function(selected) {
+		//clear controls
+		if(control) {		
+			control.removeFrom(map);
+		}
+		//add controls to map
+		control = L.control.layers(baseMaps, overlayMaps).addTo(map);
+		
+		//select correct radiobutton
+		var radio = $('input[type="radio"]');
+		var checkbox = $('input[type="checkbox"]');
+
+		var index = 0;
+		for(var layer in baseMaps) {
+			//select appropriate radiobutton
+			var current = radio.next()[index].innerHTML.trim();
+			if(current == selected) {
+				radio[index].checked = "checked";
+			}
+			index++;
+		}
+
+		//creates color legend for control
+		index = 0;
+		for(var layer in overlayMaps) {
+			var current = checkbox.next()[index];
+			var colorBox = document.createElement('span');
+			colorBox.innerHTML = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'; //&#8226;';
+			colorBox.style.backgroundColor = colors[index];
+			colorBox.style.float = 'right';
+			current.appendChild(colorBox);
+			index++;
 		}
 	};
 
 	// Loop through data and add appropriate layers and points
 	var buildMap = function(data_points, selected) {
+		
+
+		//clear old layers first
+		overlayMaps = {};
+		map.eachLayer(function(layer) {
+			if(!layer._tiles) {
+				map.removeLayer(layer);
+			}
+		});
 
 		//object to store layers names paired with their layerGroup arrays
 		//{"name of layer": L.LayerGroup[..,incident,..], ..}
@@ -97,7 +144,6 @@
 				circle.addTo(overlayMaps["Unknown"]);
 			}
 			//sets color for index
-			var colors = ["Gray", "Red", "Orange", "Yellow", "Green"];  //set colors of points
 			var index = 0;
 			for(var layer in overlayMaps) {
 				if(characteristic == layer) {
@@ -113,8 +159,7 @@
 		//clears out table before reloading it
 		document.getElementById('table').innerHTML = "";
 		//table = {Male: {Black: 30, White: 20...}, Female: {Black: 20, White: 30}}
-		//initialize unknown categories for rows and columns
-		var table = {"Unknown": {"Unknown": 0}};
+		
 
 		for(var incident in data_points) {
 			var row = data_points[incident]["Victim's Gender"]; //set rows
@@ -186,5 +231,4 @@
 			$('#table').append(row);
 		}
 	}
-
-//}($, L));
+}($, L));

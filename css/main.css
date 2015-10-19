@@ -3,6 +3,6 @@
 	height:800px;
 }
 
-#table tr:nth-child(even) {
-	background-color: "#111";
+tr:nth-child(1) {
+	border-bottom: 3px;
 }
