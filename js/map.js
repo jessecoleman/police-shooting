@@ -13,7 +13,7 @@
 	var table = {"Unknown": {"Unknown": 0}};
 
 	//customizable features
-	var defaultCategory = "Victim's Gender"; //set initially selected layer
+	var defaultCategory = "Race"; //set initially selected layer
 	var overlays = ["Victim's Gender", "Race", "Hit or Killed?", "Armed or Unarmed?"]; //set layers to select from
 	var colors = ["Gray", "Blue", "Red", "Purple", "Orange", "Green", "Brown"];  //set colors of points
 
@@ -73,11 +73,16 @@
 		//add controls to map
 		control = L.control.layers(baseMaps, overlayMaps).addTo(map);
 		
+		//Broken, needs to be fixed, but not for final solution
+
+		/*
 		//select correct radiobutton
 		var radio = $('input[type="radio"]');
-		var checkbox = $('input[type="checkbox"]');
-
 		var index = 0;
+		
+		//clear old layers
+
+		baseMaps[selected].addTo(map);
 		for(var layer in baseMaps) {
 			//select appropriate radiobutton
 			var current = radio.next()[index].innerHTML.trim();
@@ -85,10 +90,11 @@
 				radio[index].checked = "checked";
 			}
 			index++;
-		}
+		} */
 
 		//creates color legend for control
-		index = 0;
+		var checkbox = $('input[type="checkbox"]');
+		var index = 0;
 		for(var layer in overlayMaps) {
 			var current = checkbox.next()[index];
 			var colorBox = document.createElement('span');
@@ -102,8 +108,6 @@
 
 	// Loop through data and add appropriate layers and points
 	var buildMap = function(data_points, selected) {
-		
-
 		//clear old layers first
 		overlayMaps = {};
 		map.eachLayer(function(layer) {
