@@ -10,7 +10,7 @@
 	//controls for map
 	var control;
 	//initialize unknown categories for rows and columns
-	var table = {"Unknown": {"Unknown": 0}};
+	var table = {};
 
 	//customizable features
 	var defaultCategory = "Race"; //set initially selected layer
@@ -161,10 +161,10 @@
 	//builds cross-tabulated data-structure and then puts its data into table
 	var buildTable = function(data_points, selected) {
 		//clears out table before reloading it
-		document.getElementById('table').innerHTML = "";
-		//table = {Male: {Black: 30, White: 20...}, Female: {Black: 20, White: 30}}
+		table = {};
+		document.getElementById('table').innerHTML = '';
 		
-
+		//table = {Male: {Black: 30, White: 20...}, Female: {Black: 20, White: 30}}
 		for(var incident in data_points) {
 			var row = data_points[incident]["Victim's Gender"]; //set rows
 			var col = data_points[incident][selected]; //set columns
@@ -206,6 +206,7 @@
 				rows.add(row); 
 			}
 		}
+		console.log(rows);
 		//append header to table
 		$('#table').append(header);
 
